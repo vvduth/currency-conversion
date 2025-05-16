@@ -7,3 +7,4 @@ use Illuminate\Support\Facades\Route;
 
 //Route::post('/convert', [CurrencyConverterController::class, 'convert']);
 Route::post('/convert', [CurrencyConverterController::class, 'convert']);
+Route::get('/currencies', [CurrencyConverterController::class, 'getAvailableCurrencies']);

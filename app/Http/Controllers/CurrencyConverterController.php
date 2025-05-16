@@ -47,4 +47,17 @@ class CurrencyConverterController extends Controller
             return response()->json(['error' => 'An error occurred while processing your request.'], 500);
         }
     }
+
+    public function getAvailableCurrencies(CurrentcyConverterService $converterService) {
+        try {
+            $currencies = $converterService->getAvailableCurrencies();
+            return response()->json([
+                'success' => true,
+                'currencies' => $currencies,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error occurred:', ['message' => $e->getMessage()]);
+            return response()->json(['error' => 'An error occurred while fetching currencies.'], 500);
+        }
+    }
 }
