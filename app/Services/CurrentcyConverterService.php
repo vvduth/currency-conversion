@@ -2,6 +2,7 @@
 namespace App\Services;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
+use NumberFormatter;
 
 
 
@@ -53,7 +54,9 @@ class CurrentcyConverterService {
 
         if ($rates && isset($rates['quote'])) {
             $rate = $rates['quote'];
-            return $amount * $rate;
+            $result = $amount * $rate;
+            $formatted_result = $this->formatResult($result, $quote_currency);
+            return $formatted_result;
         } else {
             // Handle error
             Log::error('Conversion failed: Unable to retrieve rates.', [
@@ -63,5 +66,11 @@ class CurrentcyConverterService {
             ]);
             throw new \Exception('Currency conversion failed due to unavailable rates.');
         }
+    }
+
+    public function formatResult($amount, $currency) {
+        $locale = app()->getLocale();
+        $fmt = new NumberFormatter($locale, NumberFormatter::CURRENCY);
+        return $fmt->formatCurrency($amount, $currency);
     }
 }
