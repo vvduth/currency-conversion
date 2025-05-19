@@ -6,11 +6,11 @@ use Spatie\Csp\AddCspHeaders;
 
 Route::get('/', function () {
     return view('welcome', ['name' => 'Laravel1']);
-})->middleware(AddCspHeaders::class);
+});
 
 Route::get('/token', function () {
     return csrf_token();
-})->middleware(AddCspHeaders::class);
+});
 
 
 Route::get('/test', function () {
