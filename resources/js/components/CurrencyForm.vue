@@ -34,6 +34,7 @@ import axios from "axios";
 import CurrencyAutoSuggest from "./CurrencyAutoSuggest.vue";
 
 axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
 
 const amount = ref(0);
 const isLoading = ref(false);

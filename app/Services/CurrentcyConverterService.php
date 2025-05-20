@@ -19,7 +19,7 @@ class CurrentcyConverterService
         $this->apiUrl = env('SWOP_API_URL');
         $this->apiKey = env('SWOP_API_KEY');
     }
-    private function getRates($base_currency, $quote_currency)
+    protected function getRates($base_currency, $quote_currency)
     {
         $cacheKey = 'rates_' . $base_currency . '_' . $quote_currency;
         return Cache::remember($cacheKey, 60 * 60 * 24, function () use ($base_currency, $quote_currency) {
