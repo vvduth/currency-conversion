@@ -16,6 +16,12 @@
                 {{ filteredCurrencies.length }} suggestions found
                 ></li>
         </ul>
+        <p v-if="query && !filteredCurrencies.length" class="text-red-500 mt-2">
+            No matching currencies found, make sure to check the spelling.
+        </p>
+        <p v-if="label === 'From' && query !== 'EUR'">
+            <span class="text-red-500 text-xs">Note: The default currency is EUR.</span>
+        </p>
 
     </div>
 </template>

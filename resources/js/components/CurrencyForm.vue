@@ -2,6 +2,12 @@
     <form @submit.prevent="convert" class="max-w-md mx-auto mt-10 p-8 bg-white rounded-xl shadow-lg space-y-6"
         aria-labelledby="currency-conversion-form-title" role="form" autocomplete="off">
         <h2 id="currency-conversion-form-title" class="sr-only">Currency Conversion Form</h2>
+        <div class="mb-4">
+            <p class="text-gray-700 font-semibold mb-2">
+                The Swop API is on free tier plan so the service
+                only work if the base currecy (from) is EUR.
+            </p>
+        </div>
         <div>
             <label for="amount-input" class="block text-gray-700 font-semibold mb-2">Amount</label>
             <input id="amount-input" type="number" v-model="amount" placeholder="Enter amount"
