@@ -44,7 +44,8 @@ class CurrencyConverterController extends Controller
         }
         catch (\Exception $e) {
             Log::error('Error occurred:', ['message' => $e->getMessage()]);
-            return response()->json(['error' => 'An error occurred while processing your request.'], 500);
+            return response()->json(['success' => false,
+                    'message' => 'Something wrong happended.',], 500);
         }
     }
 
