@@ -11,4 +11,11 @@ export default defineConfig({
         vue(),
         tailwindcss(),
     ],
+    server: {
+        hmr: {
+            host: "localhost",
+        },
+        port: 3000,
+        host: true,
+    },
 });
