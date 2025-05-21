@@ -7,7 +7,6 @@
     @vite(['resources/js/app.js'])
 </head>
 <body>
-    <h1>Welcome to the app</h1>
     <div id="app"></div>
 
 

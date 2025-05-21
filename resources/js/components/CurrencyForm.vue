@@ -19,6 +19,9 @@
         <CurrencyAutoSuggest v-model="to" :currencies="currencies" label="To" aria-label="Quote currency"
             id="to-currency" required />
 
+        <div v-if="isError" class="text-red-600 text-center font-semibold">
+            {{ isError }}
+        </div>
         <button type="submit"
             class="w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-700 transition"
             aria-label="Convert currency">
@@ -44,6 +47,7 @@ axios.defaults.withXSRFToken = true;
 
 const amount = ref(0);
 const isLoading = ref(false);
+const isError = ref(null);
 const from = ref("");
 const to = ref("");
 const result = ref(null);
@@ -80,6 +84,7 @@ async function convert() {
         }
     } catch (error) {
         console.error("Error during conversion:", error);
+        isError.value = "An error occurred during conversion. Please try again.";
         result.value = null;
     } finally {
         isLoading.value = false;

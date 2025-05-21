@@ -20,7 +20,7 @@
             No matching currencies found, make sure to check the spelling.
         </p>
         <p v-if="label === 'From' && query !== 'EUR'">
-            <span class="text-red-500 text-xs">Note: The default currency is EUR.</span>
+            <span class="text-red-500 text-xs">Note: The service only works if this field is EUR.</span>
         </p>
 
     </div>
