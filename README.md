@@ -1,61 +1,227 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Currency Conversion API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple RESTful API for currency conversion for the php assignment.
 
-## About Laravel
+## Table of Contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Setup & Run Locally](#setup--run-locally)
+- [API Usage](#api-usage)
+- [Docker Deployment](#docker-deployment)
+- [License](#license)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- The service is written in PHP using Laravel 
+- Validation, testing, caching implemented
+- Convert between currencies, the result is formatted using the Web i18n framework
+- CSRF abd CSP implemented
+- The app is containerizied with Docker
+- The app has Vue.js user interface
+- Not implemented yet: Add instrumentation to the codebase. Use InfluxDB to log data from the
+backend and integrate it with Grafana for real-time monitoring and analytics 
 
-## Learning Laravel
+## Prerequisites
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- [Node.js](https://nodejs.org/) (v14+)
+- [npm](https://www.npmjs.com/) (v6+)
+- [Docker](https://www.docker.com/) (for containerization)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Requirements
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- [Docker](https://www.docker.com/products/docker-desktop) & Docker Compose
+- (Optional) Node.js & npm (for local development outside Docker)
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Project Structure
 
-### Premium Partners
+```
+.
+├── app/                # Laravel backend code
+├── resources/
+│   ├── js/             # Vue.js frontend code
+│   └── views/          # Blade templates
+├── public/             # Public assets
+├── dockerfiles/        # Dockerfiles for PHP, Node, Composer
+├── docker-compose.yaml # Docker Compose config
+├── package.json        # Node dependencies
+├── composer.json       # PHP dependencies
+└── ...
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Setup & Installation
 
-## Code of Conduct
+### 1. Clone the repository
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```sh
+git clone https://github.com/vvduth/currency-conversion.git
+cd currency-conversion
+```
 
-## Security Vulnerabilities
+### 2. Copy and configure environment variables
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```sh
+cp .env.example .env
+# Edit .env as needed (API keys, etc.)
+```
 
-## License
+### 3. Build and start the containers
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```sh
+docker compose up --build
+```
+
+This will:
+- Build PHP, Node, and Composer containers
+- Install PHP and Node dependencies
+- Start Nginx on [http://localhost:8000](http://localhost:8000)
+- Start Vite dev server on [http://localhost:3000](http://localhost:3000) (for hot reloading)
+
+---
+
+## Running the Application
+
+- Visit [http://localhost:8000](http://localhost:8000) in your browser.
+- The Vue.js frontend will be mounted in the `<div id="app"></div>` of `welcome.blade.php`.
+- Any changes to Vue components or Tailwind CSS will hot-reload if Vite is running.
+
+---
+
+## API Usage
+
+### **Base URL:**  
+`http://localhost:8000/api`
+
+### **Endpoints:**
+
+#### 1. Convert Currency
+
+- **POST** `/api/convert`
+- **Body:**
+    ```json
+    {
+      "base_currency": "EUR",
+      "quote_currency": "USD",
+      "amount": 100
+    }
+    ```
+- **Response:**
+    ```json
+    {
+      "success": true,
+      "converted_amount": 108.50,
+      "currency": "USD"
+    }
+    ```
+
+#### 2. Get Available Currencies
+
+- **GET** `/api/currencies`
+- **Response:**
+    ```json
+    {
+      "success": true,
+      "currencies": ["USD", "EUR", "GBP", ...]
+    }
+    ```
+
+---
+
+## Running Tests
+
+### **PHP/Laravel Tests**
+
+```sh
+docker compose run --rm artisan test
+```
+
+
+## Deployment with Docker
+
+1. **Build assets for production:**
+
+    ```sh
+    docker compose run --rm npm run build
+    ```
+
+2. **Start containers (without Vite dev server):**
+
+    ```sh
+    docker compose up -d
+    ```
+
+3. **Nginx will serve the built assets from `public/build`.**
+
+---
+## Setup & Run Locally (Without Docker)
+
+If you prefer to run the application directly on your machine (without Docker), follow these steps:
+
+### 1. Install PHP, Composer, Node.js, and npm
+
+- Make sure you have **PHP 8.2+**, [Composer](https://getcomposer.org/), [Node.js](https://nodejs.org/), and [npm](https://www.npmjs.com/) installed.
+
+### 2. Clone the repository
+
+```sh
+git clone https://github.com/vvduth/currency-conversion.git
+cd currency-conversion
+```
+
+### 3. Copy and configure environment variables
+
+```sh
+cp .env.example .env
+# Edit .env as needed (API keys, etc.)
+```
+
+### 4. Install PHP dependencies
+
+```sh
+composer install
+```
+
+### 5. Install Node.js dependencies
+
+```sh
+npm install
+```
+
+### 6. Build frontend assets (for production) or start Vite dev server (for development)
+
+For development with hot reload:
+```sh
+npm run dev
+```
+
+For production build:
+```sh
+npm run build
+```
+
+### 7. Run Laravel migrations (if needed)
+
+```sh
+php artisan migrate
+```
+
+### 8. Start the Laravel development server
+
+```sh
+php artisan serve
+```
+
+### 9. Access the application
+
+- Visit [http://localhost:8000](http://localhost:8000) in your browser.
+
+---
+
+**Note:**  
+- For full functionality, ensure required PHP extensions are installed (pdo, intl, mbstring, etc.).
+- You may need to configure your `.env` file with the correct API keys and database settings.
