@@ -6,32 +6,43 @@ A simple RESTful API for currency conversion for the php assignment.
 
 - [Features](#features)
 - [Prerequisites](#prerequisites)
-- [Setup & Run Locally](#setup--run-locally)
+- [Project Structure](#project-structure)
+- [Setup & Installation](#setup--installation)
+- [Running the Application](#running-the-application)
 - [API Usage](#api-usage)
-- [Docker Deployment](#docker-deployment)
-- [License](#license)
+- [Running Tests](#running-tests)
+- [Deployment with Docker](#deployment-with-docker)
+- [Setup & Run Locally (Without Docker)](#setup--run-locally-without-docker)
 
 ## Features
 
-- The service is written in PHP using Laravel 
-- Validation, testing, caching implemented
-- Convert between currencies, the result is formatted using the Web i18n framework
-- CSRF abd CSP implemented
-- The app is containerizied with Docker
-- The app has Vue.js user interface
-- Not implemented yet: Add instrumentation to the codebase. Use InfluxDB to log data from the
+- ✅ The service is written in PHP using Laravel 
+- ✅ Validation, testing, caching implemented
+- ✅ Convert between currencies, the result is formatted using the Web i18n framework
+- ✅ CSRF abd CSP implemented
+- ✅ The app is containerizied with Docker
+- ✅ The app has Vue.js user interface
+- ❌ Not implemented yet: Add instrumentation to the codebase. Use InfluxDB to log data from the
 backend and integrate it with Grafana for real-time monitoring and analytics 
 
 ## Prerequisites
 
+Choose one of the following setups:
+
+### 1. Running with Docker (Recommended)
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) (includes Docker Compose)
+- No need to install PHP, Node.js, or npm locally
+
+### 2. Running Locally (Without Docker)
+
+- [PHP 8.2+](https://www.php.net/)
+- [Composer](https://getcomposer.org/) (for PHP dependencies)
 - [Node.js](https://nodejs.org/) (v14+)
 - [npm](https://www.npmjs.com/) (v6+)
-- [Docker](https://www.docker.com/) (for containerization)
 
-## Requirements
 
-- [Docker](https://www.docker.com/products/docker-desktop) & Docker Compose
-- (Optional) Node.js & npm (for local development outside Docker)
+
 
 ---
 
@@ -113,9 +124,8 @@ This will:
 - **Response:**
     ```json
     {
-      "success": true,
-      "converted_amount": 108.50,
-      "currency": "USD"
+    "success": true,
+    "converted_amount": "€100.00"
     }
     ```
 
@@ -126,7 +136,24 @@ This will:
     ```json
     {
       "success": true,
-      "currencies": ["USD", "EUR", "GBP", ...]
+      "success": true,
+    "currencies": [
+        {
+            "code": "AED",
+            "numeric_code": "784",
+            "decimal_digits": 2,
+            "name": "United Arab Emirates dirham",
+            "active": true
+        },
+        {
+            "code": "AFN",
+            "numeric_code": "971",
+            "decimal_digits": 2,
+            "name": "Afghan afghani",
+            "active": true
+        },
+        ...
+    ]
     }
     ```
 
@@ -224,4 +251,4 @@ php artisan serve
 
 **Note:**  
 - For full functionality, ensure required PHP extensions are installed (pdo, intl, mbstring, etc.).
-- You may need to configure your `.env` file with the correct API keys and database settings.
+- You may need to configure your `.env` file with the correct API keys.
