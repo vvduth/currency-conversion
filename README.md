@@ -40,10 +40,6 @@ Choose one of the following setups:
 - [Composer](https://getcomposer.org/) (for PHP dependencies)
 - [Node.js](https://nodejs.org/) (v14+)
 - [npm](https://www.npmjs.com/) (v6+)
-
-
-
-
 ---
 
 ## Project Structure
@@ -135,9 +131,9 @@ This will:
 - **Response:**
     ```json
     {
+      
       "success": true,
-      "success": true,
-    "currencies": [
+      "currencies": [
         {
             "code": "AED",
             "numeric_code": "784",

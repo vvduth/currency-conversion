@@ -2,7 +2,7 @@
     <div class="relative">
         <label v-if="label" class="block text-gray-700 font-semibold mb-2">{{ label }}</label>
         <input type="text" v-model="query" @focus="showSuggestions = true" @blur="hideSuggestions"
-            placeholder="Type currency code/name" class="border p-2 w-full" />
+            placeholder="Type currency code/name" class="border p-2 w-full" required />
         <ul v-if="showSuggestions && filteredCurrencies.length"
             class="absolute bg-white border border-gray-300 w-full mt-1 max-h-60 overflow-y-auto z-10">
             <li v-for="currency in filteredCurrencies" :key="currency.code" @click="selectCurrency(currency)"

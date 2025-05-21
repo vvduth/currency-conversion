@@ -72,6 +72,7 @@ async function convert() {
 
     try {
         isLoading.value = true;
+        isError.value = null;
         await axios.get('/sanctum/csrf-cookie');
         const res = await axios.post("/api/convert", {
             amount: amount.value,
